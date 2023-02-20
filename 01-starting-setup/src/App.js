@@ -24,9 +24,13 @@ function App() {
     },
   ];
 
+  const addExpenseHandler = (expenses) => {
+    console.log("In App.js from NewExpense.js");
+    console.log(expenses);
+  };
   return (
     <div>
-    <NewExpense />
+    <NewExpense onAddExpense={addExpenseHandler}/>
       {/* before wrapping multiple ExpenseItem components into a single Expenses component
        <Expenses
         title={expenses.title}
