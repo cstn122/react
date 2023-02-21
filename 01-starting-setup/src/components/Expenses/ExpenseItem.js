@@ -1,7 +1,9 @@
 import "./ExpenseItem.css";
-import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
-import React, {useState} from "react";
+import React from "react";
+
+// parent of
+import ExpenseDate from "./ExpenseDate";
 
 function ExpenseItem(props) {
     // change title
