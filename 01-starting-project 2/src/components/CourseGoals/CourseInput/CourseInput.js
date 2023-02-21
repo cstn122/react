@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Button from '../../UI/Button/Button';
 import './CourseInput.css';
+<<<<<<< HEAD
 import styled from 'styled-components';
 
 const FormControl = styled.div`
@@ -41,6 +42,8 @@ const FormControl = styled.div`
 } */
 
 `;
+=======
+>>>>>>> cf3d37428f7460d13cc1bb953d4e431528ae69d0
 
 const CourseInput = props => {
   const [enteredValue, setEnteredValue] = useState('');
@@ -68,17 +71,26 @@ const CourseInput = props => {
 
   return (
     <form onSubmit={formSubmitHandler}>
+<<<<<<< HEAD
       <FormControl 
         className={`form-control ${isValid ? '' : 'invalid'}`}
         invalid={!isValid}
         >
         {/* 'form-control' + {isValid ? '' : 'invalid'} */}
+=======
+      <div className={`form-control ${isValid ? '' : 'invalid'}`}> 
+      {/* 'form-control' + {isValid ? '' : 'invalid'} */}
+>>>>>>> cf3d37428f7460d13cc1bb953d4e431528ae69d0
         <label>Course Goal</label>
         <input
           type='text'
           onChange={goalInputChangeHandler}
         />
+<<<<<<< HEAD
       </FormControl>
+=======
+      </div>
+>>>>>>> cf3d37428f7460d13cc1bb953d4e431528ae69d0
       <Button type='submit'>Add Goal</Button>
     </form>
   );
