@@ -5,7 +5,7 @@ import UserItem from './UserItem';
 
 const UserList = props => {
     return <div >
-        {userData.map((data) => <UserItem data={data}/>)}
+        {props.userData.map((data) => <UserItem data={data}/>)}
     </div>;
 };
 

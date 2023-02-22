@@ -3,16 +3,18 @@ import './AddUser.module.css'
 
 import Card from '../UI/Card'
 import NewUserForm from './NewUserForm';
-import '../AlertWindow/AlertWindow'
 import AlertWindow from '../AlertWindow/AlertWindow';
 
 const AddUser = props => {
-    if (invalid === true) {
-        return <AlertWindow />;
+
+
+
+    if ((nameInvalid === true) | (ageInvalid === true)) {
+        return <AlertWindow nameInvalid={nameInvalid} ageInvalid={ageInvalid} />;
     }
     else {
         return <Card>
-            <NewUserForm inputInvalid={invalid} />
+            <NewUserForm onSaveUserData={enteredData} nameInvalid={nameInvalid} ageInvalid={ageInvalid} />
         </Card>;
     }
 };
