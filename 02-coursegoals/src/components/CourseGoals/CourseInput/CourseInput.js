@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import Button from '../../UI/Button/Button';
-import './CourseInput.css';
+// import './CourseInput.css';
+import styles from './CourseInput.module.css';
 import styled from 'styled-components';
 
 const FormControl = styled.div`
@@ -68,17 +69,19 @@ const CourseInput = props => {
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <FormControl 
-        className={`form-control ${isValid ? '' : 'invalid'}`}
+      {/* <FormControl  */}
+      <div
+        className={`${styles['form-control']} ${!isValid && styles.invalid}`}
         invalid={!isValid}
-        >
+      >
         {/* 'form-control' + {isValid ? '' : 'invalid'} */}
         <label>Course Goal</label>
         <input
           type='text'
           onChange={goalInputChangeHandler}
         />
-      </FormControl>
+        {/* </FormControl> */}
+      </div>
       <Button type='submit'>Add Goal</Button>
     </form>
   );
