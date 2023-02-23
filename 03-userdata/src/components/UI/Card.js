@@ -1,10 +1,14 @@
 import React from 'react';
 import './Card.module.css'
 
-const Card = () => {
-    return <div>
+const Card = (props) => {
+    const classes = "card " + props.className;
 
-    </div>;
+    return (
+        <div className={classes}>
+            {props.children}
+        </div>
+    );
 };
 
 export default Card;

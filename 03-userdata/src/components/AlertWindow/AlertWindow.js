@@ -5,13 +5,13 @@ import Card from '../UI/Card';
 
 const AlertWindow = props => {
     let alertMessage = '';
-    if ((props.nameInvalid === true) & (props.ageInvalid === true)) {
+    if ((props.nameIsValid === false) & (props.ageIsValid === false)) {
         alertMessage = 'Please enter a valid name and age (non-empty values).';
     }
-    else if (props.nameInvalid === true) {
+    else if (props.nameIsValid === false) {
         alertMessage = 'Please enter a valid name (non-empty values).';
     }
-    else if (props.ageInvalid === true) {
+    else if (props.ageIsValid === false) {
         alertMessage = 'Please enter a valid age (> 0).';
     }
 

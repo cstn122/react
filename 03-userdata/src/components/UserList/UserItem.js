@@ -2,8 +2,8 @@ import React from 'react';
 import './UserItem.module.css'
 
 const UserItem = props => {
-    return <div>
-        props.data = ;
+    return <div data = {data}>
+        {data.name} ({data.age} y/o)
     </div>;
 };
 
