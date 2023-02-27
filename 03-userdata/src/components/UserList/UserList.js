@@ -4,9 +4,12 @@ import './UserList.module.css'
 import UserItem from './UserItem';
 
 const UserList = props => {
-    return <div >
-        {props.userData.map((data) => <UserItem data={data}/>)}
-    </div>;
+    console.log('In UserList.js: ' + props.userData);
+
+    return <ul >
+        {/* props.userData.unshift() */}
+        {props.userData.map(data => {<UserItem data={data}/>})}
+    </ul>;
 };
 
 export default UserList;
