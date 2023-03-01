@@ -7,8 +7,7 @@ const UserList = props => {
     console.log('In UserList.js: ' + props.userData);
 
     return <ul >
-        {/* props.userData.unshift() */}
-        {props.userData.map(data => {<UserItem data={data}/>})}
+        {props.userData.map((data) => (<UserItem key={data.id} name={data.name} age={data.age} />))}
     </ul>;
 };
 
