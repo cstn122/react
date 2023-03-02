@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './NewUserForm.module.css'
+import classes from './NewUserForm.module.css';
 
 const NewUserForm = props => {
     // record states
@@ -27,24 +27,20 @@ const NewUserForm = props => {
         };
 
         props.saveUserData(enteredUserData);
-        
+
         setEnteredName('');
         setEnteredAge('');
     };
 
-    return <form onSubmit={submitHandler} >
-        <div>
+    return (
+        <form onSubmit={submitHandler}>
             <h3>Username</h3>
             <input type='text' onChange={nameChangeHandler} value={enteredName} />
-        </div>
-        <div>
             <h3>Age (Years)</h3>
             <input type='number' min='0' step='1' onChange={ageChangeHandler} value={enteredAge} />
-        </div>
-        <div>
             <button type='submit' >Add User</button>
-        </div>
-    </form>;
+        </form>
+    );
 };
 
 export default NewUserForm;

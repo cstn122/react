@@ -3,7 +3,6 @@ import './App.module.css';
 
 import AddUser from './components/NewUser/AddUser';
 import UserList from './components/UserList/UserList';
-import AlertWindow from './components/AlertWindow/AlertWindow';
 
 const DUMMY_USER_DATA = [
     {
@@ -22,39 +21,34 @@ const App = props => {
     const [userList, setUserList] = useState(DUMMY_USER_DATA);
     let content = '';
 
-
-
     const nameInvalidHandler = nameInvalid => {
         console.log('               ' + nameInvalid);
         content = 'name invalid';
-        alert('name invalid');
         return;
     };
 
     const ageInvalidHandler = ageInvalid => {
         console.log('               ' + ageInvalid);
         content = 'age invalid';
-        alert('age invalid');
         return;
     };
 
-    console.log(content);
-
-
-
-
+    if (content !== '') {
+        alert(content);
+    };
 
     const saveDataHandler = (userList) => {
         setUserList(prevData => { return [userList, ...prevData]; })
     };
 
     // valid input
-    return <div className='body'>
-        <AddUser saveUserData={saveDataHandler} onNameInvalid={nameInvalidHandler} onAgeInvalid={ageInvalidHandler} />
-        {/* <AddUser saveUserData={saveDataHandler} /> */}
-        <UserList userData={userList} />
-    </div>
-
+    return (
+        <div className='body'>
+            <AddUser saveUserData={saveDataHandler} onNameInvalid={nameInvalidHandler} onAgeInvalid={ageInvalidHandler} />
+            {/* <AddUser saveUserData={saveDataHandler} /> */}
+            <UserList userData={userList} />
+        </div>
+    );
 };
 
 export default App;

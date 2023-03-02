@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import './AddUser.module.css'
+import classes from './AddUser.module.css'
+import Button from '../UI/Button';
+import Card from '../UI/Card';
+
+import AlertWindow from '../AlertWindow/AlertWindow';
 
 const AddUser = props => {
 
@@ -8,6 +12,9 @@ const AddUser = props => {
     const [enteredAge, setEnteredAge] = useState('');
     const [nameIsValid, setNameIsValid] = useState(true);
     const [ageIsValid, setAgeIsValid] = useState(true);
+
+    const [alert, setAlert] = useState();
+    const [alertMessage, setAlertMessage] = useState({ title: 'Input Error', message: '' });
 
     // update states dynamically
     const nameChangeHandler = event => {
@@ -28,47 +35,82 @@ const AddUser = props => {
         const enteredUserData = {
             id: Math.random().toString(),
             name: enteredName,
-            age: +enteredAge,
+            age: enteredAge,
         };
         console.log(enteredUserData);
 
         // evaluate validity: empty name/age and negative age not allowed
         if (enteredUserData.name.toString().trim().length === 0) {
-            setNameIsValid(prev => { return false; });
-            const name_invalid = !nameIsValid;
-            props.onNameInvalid(name_invalid);
-
+            // setNameIsValid(prev => { return false; });
+            // const name_invalid = !nameIsValid;
+            // props.onNameInvalid(name_invalid);
+            setAlert(prev => true);
+            setAlertMessage(prev => ({...prev, message: 'Enter a name!'}));
+            return;
         }
 
-        if ((enteredUserData.age.toString().trim().length === 0) | (enteredUserData.age.toString().trim() < 0)) {
-            setAgeIsValid(prev => { return false; });
-            const age_invalid = !ageIsValid;
-            props.onNameInvalid(age_invalid);
+        if (enteredUserData.age.toString().trim().length === 0) {
+            // setAgeIsValid(prev => { return false; });
+            // const age_invalid = !ageIsValid;
+            // props.onNameInvalid(age_invalid);
+            setAlert(prev => true);
+            setAlertMessage(prev => ({...prev, message: 'Age should be larger than zero!'}));
+            return;
         }
+
+        console.log('validity check in AddUser.js');
+        console.log('name is valid? ' + nameIsValid);
+        console.log('age is valid? ' + ageIsValid);
 
         props.saveUserData(enteredUserData);
         console.log('New user added!');
 
         setEnteredName(prev => { return ''; });
         setEnteredAge(prev => { return ''; });
-        console.log('validity check in AddUser.js');
-        console.log('name is valid? ' + nameIsValid);
-        console.log('age is valid? ' + ageIsValid);
     };
 
-    return <form onSubmit={submitHandler} className='body'>
+    // if ((nameIsValid === false) || (ageIsValid === false)) {
+    //     return <AlertWindow alert={alertMessage} />;
+    // }
+
+    const dismissAlertHandler = () => {
+        setAlert(false);
+    };
+
+    return (
         <div>
-            <h3>Username</h3>
-            <input className='input' type='text' onChange={nameChangeHandler} value={enteredName} />
+            {alert && (
+                <AlertWindow
+                    title={alertMessage.title}
+                    message={alertMessage.message}
+                    onDismiss={dismissAlertHandler}
+                />
+            )}
+
+            <Card className={classes.input}>
+                <form onSubmit={submitHandler} >
+                    <label htmlFor='username'>Username</label>
+                    <input
+                        id='username'
+                        type='text'
+                        onChange={nameChangeHandler}
+                        value={enteredName}
+                    />
+                    <label htmlFor='age'>Age (Years)</label>
+                    <input
+                        id='age'
+                        type='number'
+                        step='1'
+                        onChange={ageChangeHandler}
+                        value={enteredAge}
+                        className={classes.input}
+                    />
+
+                    <Button type='submit'>Add User</Button>
+                </form>
+            </Card>
         </div>
-        <div>
-            <h3>Age (Years)</h3>
-            <input type='number' min='0' step='1' onChange={ageChangeHandler} value={enteredAge} />
-        </div>
-        <div>
-            <button type='submit' >Add User</button>
-        </div>
-    </form>;
+    );
 };
 
 export default AddUser;
