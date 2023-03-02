@@ -49,7 +49,8 @@ const AddUser = props => {
             return;
         }
 
-        if (enteredUserData.age.toString().trim().length === 0) {
+        // if (enteredUserData.age.toString().trim().length === 0) {
+        if ((enteredUserData.age < 0) || (enteredUserData.age.toString().trim().length === 0)) {
             // setAgeIsValid(prev => { return false; });
             // const age_invalid = !ageIsValid;
             // props.onNameInvalid(age_invalid);
