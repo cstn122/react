@@ -13,7 +13,7 @@ function App() {
   // so not using useState here is to avoid the infinite loggedIn/setLoggedIn loop.
   useEffect(
     () => {
-      console.log('           RENDERED');
+      console.log('-------------RENDERED-------------');
       const storedUserLoggedInInfo = localStorage.getItem('isLoggedIn');
 
       if (storedUserLoggedInInfo === '1') {
