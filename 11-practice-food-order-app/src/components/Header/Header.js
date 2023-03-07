@@ -5,13 +5,16 @@ import HeaderCartButton from './HeaderCartButton';
 
 const Header = (props) => {
     return (
-        <header className={`${classes.header} ${props.classes}`}>
-            <h1>ReactMeals</h1>
-            <HeaderCartButton />
-            {/* <div className={classes['main-image']}>
-                <img ref='./meals.jpg' alt='A table of delicious meals.' />
-            </div> */}
-        </header>
+        <>
+            <header className={`${classes.header} ${props.classes}`}>
+                <h1>ReactMeals</h1>
+                <HeaderCartButton />
+            </header>
+            <div className={classes['main-image']}>
+                <p>image here</p>
+                {/* <img ref='./meals.jpg' alt='A table of delicious meals.' /> */}
+            </div>
+        </>
     );
 };
 

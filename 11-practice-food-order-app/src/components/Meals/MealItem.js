@@ -1,21 +1,16 @@
 import React from 'react';
 import classes from './MealItem.module.css';
-import Input from '../../UI/Input';
+import MealItemForm from './MealItemForm';
 
-const MealItem = ({ mealInfo }) => {
-    const addAmountHandler = (prevAmount) => {
-        return prevAmount + 1;
-    };
+const MealItem = ({ key, name, description, price }) => {
 
     return (
-        <div className={classes.meal} key={mealInfo.id}>
-            <h3>{mealInfo.name}</h3>
-            <p className={classes.description}>{mealInfo.description}</p>
-            <p className={classes.price}>${mealInfo.price}</p>
-            <label>Amount</label>
-            <Input></Input>
-            <button onClick={addAmountHandler}>+ Add</button>
-        </div>
+        <li className={classes.meal} key={key}>
+            <h3>{name}</h3>
+            <p className={classes.description}>{description}</p>
+            <p className={classes.price}>${price}</p>
+            <MealItemForm></MealItemForm>
+        </li>
     );
 };
 
