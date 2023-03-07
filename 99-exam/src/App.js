@@ -3,6 +3,7 @@ import List from "./components/List/List";
 import Create from "./components/Create/Create";
 import Update from "./components/Update/Update";
 import Context from "./Context/Context";
+import Button from "./components/UI/Button";
 
 const App = () => {
   const DUMMY_ITEMS = [
@@ -60,12 +61,17 @@ const App = () => {
 
   const createItemHandler = () => {
     console.log("create!");
-    setCreateDialog(() => <Create onCancel={cancelHandler} />);
+    setCreateDialog(() => <Create onCancel={cancelHandler} onSaveData={saveDataHandler} />);
   };
 
   const updateItemHandler = () => {
     console.log("update!");
-    setUpdateDialog(() => <Update onCancel={cancelHandler}/>);
+    setUpdateDialog(() => <Update onCancel={cancelHandler} />);
+  };
+
+  const saveDataHandler = (enteredData) => {
+    console.log('saving...');
+    setfilteredData([...filteredData, enteredData]);
   };
 
   const cancelHandler = () => {
@@ -73,18 +79,25 @@ const App = () => {
   };
 
   return (
-    <Context.Provider>
+    <>
       {createDialog}
       {updateDialog}
-      <button onClick={createItemHandler}>Create</button>
+      <Button onClick={createItemHandler}>Create</Button>
       <input
         type="text"
         value={filter}
         onChange={filterChangeHandler}
         placeholder="Filter by name"
+        style={{
+          margin: 'auto',
+          textAlign: 'left',
+          borderRadius: '3px',
+          border: 'none',
+          display: 'block'
+        }}
       />
-      <List data={filteredData} onUpdate={updateItemHandler} />
-    </Context.Provider>
+      <List data={filteredData} />
+    </>
   );
 };
 

@@ -23,7 +23,7 @@ const Card = (props) => {
     };
     
   return (
-    <form className={classes.card} onSubmit={submitHandler}>
+    <form className={`${classes.card} ${props.classes}`} onSubmit={submitHandler}>
       <h3>{props.title}</h3>
       <label>Name</label>
       <input

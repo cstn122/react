@@ -2,17 +2,33 @@ import React, { useState, useReducer } from "react";
 import classes from "./List.module.css";
 import Item from "./Item";
 
-// const buttonReducer = (state, action) => {
-//   switch (action.type) {
-//     case "CREATE_ITEM":
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "CREATE_ITEM":
+      return {};
 
-//     case "EDIT_ITEM":
-    
-//     case 'DELETE_ITEM':
-//   }
-// };
+    case "EDIT_ITEM":
+      return {};
+
+    case 'DELETE_ITEM':
+      return {};
+
+    default:
+      return {};
+  }
+};
+
 
 const List = ({ data }) => {
+  const [state, dispatch] = useReducer(reducer, { id: '', name: '', description: '', is_demo: '' });
+  
+  const updateHandler = () => {
+    dispatch({ type: 'EDIT_ITEM', })
+  };
+
+  const deleteHandler = () => {
+    
+  };
 
   return (
     <table className={classes.table}>
@@ -31,6 +47,8 @@ const List = ({ data }) => {
             name={item.name}
             description={item.description}
             is_demo={item.is_demo}
+            onUpdate={updateHandler}
+            onDelete={deleteHandler}
           />
         ))}
       </tbody>
