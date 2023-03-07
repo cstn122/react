@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Demo Location",
+    "description": "Demo Location",
+    "is_demo": true
+  },
+  {
+    "id": 2,
+    "name": "WMC",
+    "description": "WMC",
+    "is_demo": false
+  },
+  {
+    "id": 3,
+    "name": "MWC",
+    "description": "MWC",
+    "is_demo": false
+  },
+  {
+    "id": 4,
+    "name": "PXD",
+    "description": "PXD",
+    "is_demo": false
+  },
+  {
+    "id": 5,
+    "name": "Frank",
+    "description": "Frank",
+    "is_demo": false
+  }
+]

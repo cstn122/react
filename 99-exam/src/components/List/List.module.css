@@ -1,0 +1,18 @@
+.table {
+    table-layout: fixed;
+    width: 70%;
+    border: 0.1px solid white;
+    margin: auto;
+    text-align: left;
+}
+
+.table th {
+    font-weight: normal;
+    color: white;
+    background-color: rgb(31, 73, 125);
+}
+
+.table td {
+    color: black;
+
+}
