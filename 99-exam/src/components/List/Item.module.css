@@ -1,8 +1,14 @@
 .item {}
 
 .edit {
+    font: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
     color: white;
-    background-color: rgb(23, 113, 124);
+    background-color: rgb(49, 133, 156);
+    border: 1px solid rgb(49, 133, 156);
+    padding: 5px 5px;
 }
 
 .edit :hover,
@@ -20,9 +26,12 @@
     font: inherit;
     font-size: 1rem;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 5px;
     color: white;
-    background-color: darkred;
+    background-color: rgb(192, 80, 77);
+    border: 1px solid rgb(192, 80, 77);
+    margin-left: 20px;
+    padding: 5px 5px;
 }
 
 .delete :hover,

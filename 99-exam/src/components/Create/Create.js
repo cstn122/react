@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import classes from "./Create.module.css";
+import Button from "../UI/Button";
 
 const Create = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
-
-  const nameChangeHandler = (event) => {
-    setEnteredName(() => event.target.value);
-  };
-
-  const descriptionChangeHandler = (event) => {
-    setEnteredDescription(() => event.target.value);
-  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -22,31 +15,34 @@ const Create = (props) => {
       is_demo: '',
     }
     console.log('submitted! ', enteredData);
-    props.onSaveData(enteredData);
+    props.onSave(enteredData);
   };
 
   const cancelHandler = (event) => {
     event.preventDefault();
     console.log('cancelled!');
-    props.onCancel(true);
+    props.onCancel('create');
   };
 
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
-      <h3>Create</h3>
-      <label>Name</label>
-      <input
-        value={enteredName}
-        onChange={nameChangeHandler}
-      />
-      <label>Description</label>
-      <input
-        value={enteredDescription}
-        onChange={descriptionChangeHandler}
-      />
-      <button onClick={cancelHandler}>Cancel</button>
-      <button type="submit">Save</button>
-    </form>
+    <>
+      <div className={classes.backdrop}></div>
+      <form className={classes.form} onSubmit={submitHandler}>
+        <h3>Create</h3>
+        <label>Name</label>
+        <input
+          value={enteredName}
+          onChange={e => setEnteredName(e.target.value)}
+        />
+        <label>Description</label>
+        <input
+          value={enteredDescription}
+          onChange={e => setEnteredDescription(() => e.target.value)}
+        />
+        <Button onClick={cancelHandler}>Cancel</Button>
+        <Button type="submit">Save</Button>
+      </form>
+    </>
   );
 };
 

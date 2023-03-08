@@ -1,33 +1,17 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import classes from "./List.module.css";
 import Item from "./Item";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "CREATE_ITEM":
-      return {};
+const List = ({data, onUpdate, onDelete}) => {
 
-    case "EDIT_ITEM":
-      return {};
-
-    case 'DELETE_ITEM':
-      return {};
-
-    default:
-      return {};
-  }
-};
-
-
-const List = ({ data }) => {
-  const [state, dispatch] = useReducer(reducer, { id: '', name: '', description: '', is_demo: '' });
-  
-  const updateHandler = () => {
-    dispatch({ type: 'EDIT_ITEM', })
+  const updatingHandler = (updating) => {
+    console.log('List updating', updating);
+    onUpdate(updating);
   };
 
-  const deleteHandler = () => {
-    
+  const deletingHandler = (deleting) => {
+    console.log('List deleting', deleting);
+    onDelete(deleting);
   };
 
   return (
@@ -43,12 +27,13 @@ const List = ({ data }) => {
 
         {data.map((item) => (
           <Item
+            key={item.id}
             id={item.id}
             name={item.name}
             description={item.description}
             is_demo={item.is_demo}
-            onUpdate={updateHandler}
-            onDelete={deleteHandler}
+            onUpdating={updatingHandler}
+            onDeleting={deletingHandler}
           />
         ))}
       </tbody>

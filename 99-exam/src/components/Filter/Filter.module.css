@@ -1,0 +1,12 @@
+.filter {
+    display: inline-block;
+    font: inherit;
+    font-size: small;
+    margin: 1rem 1rem 0.5rem 83rem;
+    padding: 5px;
+    height: 1.5rem;
+    width: 172px;
+    text-align: left;
+    border-radius: 3px;
+    border: 1.5px solid rgb(67, 114, 127);
+}
