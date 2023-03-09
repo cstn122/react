@@ -1,14 +1,10 @@
-import React, { useState, useContext } from "react";
-import { FullDataContext, FullDataDispatchContext } from "../../FullDataContext/FullDataContext";
+import React, { useState } from "react";
 import classes from "./Update.module.css";
+import Button from "../UI/Button";
 
 const Create = (props) => {
-  const allData = useContext(FullDataContext);
-  const dispatch = useContext(FullDataDispatchContext);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedDescription, setUpdatedDescription] = useState("");
-  
-  console.log('rendering Update.js', props.updateItem);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -18,11 +14,6 @@ const Create = (props) => {
       description: updatedDescription,
       is_demo: props.updateItem.is_demo,
     }
-
-    dispatch({
-      type: 'changed',
-      data: updatedData,
-    })
 
     console.log('submitted! ', updatedData);
     props.onSave(updatedData);
@@ -41,16 +32,18 @@ const Create = (props) => {
         <h3>Update</h3>
         <label>Name</label>
         <input
+          placeholder={props.updateItem.name}
           value={updatedName}
           onChange={e => setUpdatedName(e.target.value)}
         />
         <label>Description</label>
         <input
+          placeholder={props.updateItem.description}
           value={updatedDescription}
           onChange={e => setUpdatedDescription(e.target.value)}
         />
-        <button onClick={cancelHandler}>Cancel</button>
-        <button type="submit">Save</button>
+        <Button type="submit" classes={classes.save}>Save</Button>
+        <Button onClick={cancelHandler} classes={classes.cancel}>Cancel</Button>
       </form>
     </>
   );

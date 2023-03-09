@@ -39,8 +39,8 @@ const Create = (props) => {
           value={enteredDescription}
           onChange={e => setEnteredDescription(() => e.target.value)}
         />
-        <Button onClick={cancelHandler}>Cancel</Button>
-        <Button type="submit">Save</Button>
+        <Button type="submit" classes={classes.save}>Save</Button>
+        <Button onClick={cancelHandler} classes={classes.cancel}>Cancel</Button>
       </form>
     </>
   );

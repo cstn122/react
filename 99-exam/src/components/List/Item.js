@@ -1,25 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./Item.module.css";
 import Button from "../UI/Button";
 
 const Item = (item) => {
-  const [updating, setUpdating] = useState('');
-  const [deleting, setDeleting] = useState('');
+  // const [updating, setUpdating] = useState('');
+  // const [deleting, setDeleting] = useState('');
 
   const updateHandler = () => {
-    console.log(item.id);
-    setUpdating('5');
-    console.log(updating);
+    // setUpdating(item.id);
+    // item.onUpdating(updating);
     item.onUpdating(item);
-    console.log('*****', item.onUpdating);
   };
 
   const deleteHandler = () => {
-    setDeleting(() => item.id);
-    item.onDeleting(deleting);
+    // setDeleting(() => item);
+    // item.onDeleting(deleting);
+    item.onDeleting(item);
   };
-  // setUpdating('5');
-  // console.log(updating);
 
   return (
     <tr className={classes.item}>

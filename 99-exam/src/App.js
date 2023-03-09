@@ -3,7 +3,6 @@ import classes from './App.module.css';
 import List from "./components/List/List";
 import Create from "./components/Create/Create";
 import Update from "./components/Update/Update";
-import { FullDataContext, FullDataDispatchContext } from "./FullDataContext/FullDataContext";
 import Button from "./components/UI/Button";
 import Filter from "./components/Filter/Filter";
 
@@ -40,13 +39,14 @@ const App = () => {
       is_demo: false,
     },
   ];
-  // const nextId = 6;
   const [allData, dispatch] = useReducer(dataReducer, DUMMY_ITEMS)
 
   const [filter, setFilter] = useState("");
   const [filteredData, setFilteredData] = useState(allData);
-  const [createDialog, setCreateDialog] = useState(null);
-  const [updateDialog, setUpdateDialog] = useState(null);
+  const [createModal, setCreateModal] = useState(null);
+  const [updateModal, setUpdateModal] = useState(null);
+
+  let nextId = allData.length + 1;
 
   const filterHandler = (search, searchResult) => {
     // console.log('filter: ', search);
@@ -64,69 +64,77 @@ const App = () => {
 
   const createHandler = () => {
     console.log("create!");
-    setCreateDialog(() => <Create onCancel={cancelHandler} onSave={saveDataHandler} />);
+    setCreateModal(() => <Create onCancel={cancelHandler} onSave={saveDataHandler} />);
   };
 
   const saveDataHandler = (enteredData) => {
     console.log('saving...');
     dispatch({
       type: 'added',
-      id: Math.random(),   // id: nextId++,
+      id: nextId++,
       name: enteredData.name,
       description: enteredData.description,
       is_demo: null,
     });
     console.log('dispatched', enteredData);
-    setCreateDialog(() => null);
+    setCreateModal(() => null);
   };
 
   const updateHandler = (updateITEM) => {
-    setUpdateDialog(() => <Update onCancel={cancelHandler} onSave={updateDataHandler} updateItem={updateITEM}/>);
+    setUpdateModal(() => <Update onCancel={cancelHandler} onSave={updateDataHandler} updateItem={updateITEM} />);
   };
 
-  const updateDataHandler = (updatedData) => {
-    console.log('updating from App...', updatedData);
+  const updateDataHandler = (dataToUpdate) => {
+    console.log('updating from App...', dataToUpdate);
     dispatch({
       type: 'changed',
-      id: updatedData.id,
-      name: updatedData.name,
-      description: updatedData.description,
-      is_demo: updatedData.is_demo,
+      data: {
+        id: dataToUpdate.id,
+        name: dataToUpdate.name,
+        description: dataToUpdate.description,
+        is_demo: dataToUpdate.is_demo,
+      },
     })
-    setUpdateDialog(() => null);
+    setUpdateModal(() => null);
   };
 
   const cancelHandler = (cancel) => {
     console.log(cancel);
     if (cancel === 'update') {
-      setUpdateDialog(() => null);
+      setUpdateModal(() => null);
     } else if (cancel === 'create') {
-      setCreateDialog(() => null);
+      setCreateModal(() => null);
     }
   };
 
-  const deleteHandler = (dataId) => {
+  const deleteHandler = (dataToDelete) => {
     dispatch({
       type: 'deleted',
-      id: dataId,
+      data: {
+        id: dataToDelete.id,
+        name: dataToDelete.name,
+        description: dataToDelete.description,
+        is_demo: dataToDelete.is_demo,
+      },
     })
   };
 
   return (
-    <FullDataContext.Provider value={allData}>
-      <FullDataDispatchContext.Provider value={dispatch}>
-        {createDialog}
-        {updateDialog}
-        {/* <Update/> */}
-        <Button onClick={createHandler} classes={classes.button}>Create</Button>
-        <Filter onFilter={filterHandler} fullData={allData} />
-        <List
-          data={filter.trim().length === 0 ? allData : filteredData}
-          onUpdate={updateHandler}
-          onDelete={deleteHandler}
-        />
-      </FullDataDispatchContext.Provider>
-    </FullDataContext.Provider>
+    // <FullDataContext.Provider value={allData}>
+    // <FullDataDispatchContext.Provider value={dispatch}>
+    <>
+      {createModal}
+      {updateModal}
+      <Button onClick={createHandler} classes={classes.button}>Create</Button>
+      <Filter onFilter={filterHandler} fullData={allData} />
+      <List
+        data={filter.trim().length === 0 ? allData : filteredData}
+        onUpdate={updateHandler}
+        onDelete={deleteHandler}
+      />
+    </>
+    // </FullDataDispatchContext.Provider>
+    // </FullDataContext.Provider>
   );
 };
 
@@ -137,25 +145,23 @@ const dataReducer = (allData, action) => {
         id: action.id,
         name: action.name,
         description: action.description,
-        is_demo: '',
+        is_demo: false,
       }];
     }
 
     case 'changed': {
       return allData.map(d => {
         if (d.id === action.data.id) {
-          console.log('updated!');
           return action.data;
         } else {
-          console.log('updating:', action.data.id);
           return d;
         }
       });
     }
 
     case 'deleted': {
-      console.log('the one to delete:', action.id);
-      return allData.filter(d => d.id !== action.id);
+      console.log('deleting:', action.data.id);
+      return allData.filter(d => d.id !== action.data.id);
     }
     default: {
       throw Error('Unknown action:', action.type);

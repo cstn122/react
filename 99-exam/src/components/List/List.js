@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./List.module.css";
 import Item from "./Item";
 
