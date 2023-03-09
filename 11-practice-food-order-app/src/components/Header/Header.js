@@ -8,6 +8,7 @@ const Header = (props) => {
     const showCartHandler = (show) => {
         if (show) {
             props.onShowCartModal(show);
+            console.log('show cart modal!');
         }
     };
 

@@ -1,45 +1,37 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Header from './components/Header/Header';
 import AvailableMeals from './components/Meals/AvailableMeals';
 import MealsSummary from './components/MealsSummary/MealsSummary';
 import Cart from './components/Cart/Cart';
-import { CartItemsContext } from './CartItemsContext';
+import { CartItemsContext, SetCartItemsContext } from './CartItemsContext';
 
-const App = (props) => {
+const App = () => {
   const [cartModal, setCartModal] = useState(null);
-  const [mealToAdd, setMealToAdd] = useState(null);
-  const [amountToAdd, setAmountToAdd] = useState(null);
-  const [isAdding, setIsAdding] = useState(false);
-
-
-  const cartItems = useContext(CartItemsContext);
+  const [cartItems, setCartItems] = useState([]);
 
   const showCartModal = (show) => {
     if (show) {
       setCartModal(
-        <Cart
-          addedMeal={mealToAdd}
-          addedAmount={amountToAdd}
-          onClose={() => setCartModal(() => null)}
-          adding={isAdding}
-        />
-      );
-    }
+        <Cart onClose={() => setCartModal(() => null)} />);
+      console.log('showing cart modal...');
+    } else { console.log('not showing'); }
   };
 
-  const addHandler = (meal, amount) => {
-    setIsAdding(true);
-    setMealToAdd(() => meal);
-    setAmountToAdd(() => amount);
-    
-  };
+  const addToCartHandler = (meal, amount) => {
+    setCartItems(() =>
+      [...cartItems, {key: meal.id, item: meal.name, price: meal.price, amount: amount }]
+    );
+    console.log('done adding', cartItems);
+  }; 
 
   return (
-    <CartItemsContext.Provider value={itemsIncart}>
-      {cartModal}
-      <Header onShowCartModal={showCartModal} />
-      <MealsSummary />
-      <AvailableMeals onAdd={addHandler} />
+    <CartItemsContext.Provider value={cartItems}>
+      <SetCartItemsContext.Provider value={setCartItems}>
+        {cartModal}
+        <Header onShowCartModal={showCartModal} />
+        <MealsSummary />
+        <AvailableMeals onAdd={addToCartHandler} />
+      </SetCartItemsContext.Provider>
     </CartItemsContext.Provider>
   );
 };

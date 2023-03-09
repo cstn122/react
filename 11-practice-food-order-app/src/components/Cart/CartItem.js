@@ -1,7 +1,17 @@
+import React, { useContext } from 'react';
 import classes from './CartItem.module.css';
+import { CartItemsContext, SetCartItemsContext } from '../../CartItemsContext';
 
 const CartItem = (props) => {
   const price = `$${props.price.toFixed(2)}`;
+  const cartItems = useContext(CartItemsContext);
+  const setCartItems = useContext(SetCartItemsContext);
+
+  const increaseHandler = () => {
+    cartItems.map(item => { item.id === });
+
+  };
+  const decreaseHandler = () => {};
 
   return (
     <li className={`${classes['cart-item']} ${props.classes}`}>
@@ -13,8 +23,8 @@ const CartItem = (props) => {
         </div>
       </div>
       <div className={classes.actions}>
-        <button onClick={props.onRemove}>−</button>
-        <button onClick={props.onAdd}>+</button>
+        <button onClick={decreaseHandler}>−</button>
+        <button onClick={increaseHandler}>+</button>
       </div>
     </li>
   );
