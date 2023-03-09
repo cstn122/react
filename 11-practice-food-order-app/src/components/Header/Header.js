@@ -1,18 +1,24 @@
 import React from 'react';
 import classes from './Header.module.css';
+import mealsImage from './meals.jpg';
 
 import HeaderCartButton from './HeaderCartButton';
 
 const Header = (props) => {
+    const showCartHandler = (show) => {
+        if (show) {
+            props.onShowCartModal(show);
+        }
+    };
+
     return (
         <>
             <header className={`${classes.header} ${props.classes}`}>
                 <h1>ReactMeals</h1>
-                <HeaderCartButton />
+                <HeaderCartButton onShowCart={showCartHandler} />
             </header>
             <div className={classes['main-image']}>
-                <p>image here</p>
-                {/* <img ref='./meals.jpg' alt='A table of delicious meals.' /> */}
+                <img src={mealsImage} alt='A table of delicious meals.' />
             </div>
         </>
     );

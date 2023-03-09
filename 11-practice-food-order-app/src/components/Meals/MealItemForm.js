@@ -5,23 +5,28 @@ import Input from '../../UI/Input';
 const MealItemForm = (props) => {
     const [amount, setAmount] = useState(1);
 
-    const amountChangeHandler = (event) => {
-        setAmount(event.targe.value);
-        console.log('amount changed to ', amount);
-    };
-
     const addToCartHandler = (event) => {
         event.preventDefault();
-        // add AMOUNT of meals to cart
         console.log('current amount: ', amount);
-        console.log('item added to cart!');
+        props.onAddToCart(amount);
         setAmount(1);
     };
-    console.log(amount);
 
     return (
         <form onSubmit={addToCartHandler} className={classes.form}>
-            <Input type='number' min={1} step={1} label='Amount' value={amount} onChange={amountChangeHandler} />
+            {/* <Input type='number' min={1} step={1} label='Amount' value={amount} onChange={e => setAmount(() => e.target.value)} /> */}
+            <Input
+                label='Amount'
+                input={{
+                    id: 'amount_' + props.id,
+                    type: 'number',
+                    min: 1,
+                    step: 1,
+                    max: 5,
+                    value: amount,
+                    onChange: e => setAmount(() => e.target.value)
+                }}
+            />
             <button type='submit'>+ Add</button>
         </form>
     );

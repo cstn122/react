@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './AvailableMeals.module.css';
 import MealItem from './MealItem';
 import Card from '../../UI/Card';
 
-const AvailableMeals = () => {
+const AvailableMeals = (props) => {
+
 
   const DUMMY_MEALS = [
     {
@@ -31,18 +32,29 @@ const AvailableMeals = () => {
       price: 18.99,
     },
   ];
+  const [meals, setMeals] = useState(DUMMY_MEALS);
+
+  const addMealHandler = (mealToAdd, amount) => {
+    console.log('Adding', amount, mealToAdd.name, 'to cart...');
+    props.onAdd(mealToAdd, amount);
+  };
 
   return (
-    <Card classes={classes.meals}>
-      <ul>
-        {DUMMY_MEALS.map(meal =>
-          <MealItem
-            key={meal.id}
-            name={meal.name}
-            description={meal.description}
-            price={meal.price} />)}
-      </ul>
-    </Card>
+    <section >
+      <Card classes={classes.meals}>
+        <ul >
+          {meals.map(meal =>
+            <MealItem
+              key={meal.id}
+              id={meal.id}
+              name={meal.name}
+              description={meal.description}
+              price={meal.price}
+              onAdd={addMealHandler} />)}
+        </ul>
+      </Card>
+    </section>
+
   );
 };
 
