@@ -1,28 +1,28 @@
-import { getElementError } from '@testing-library/react';
 import React from 'react';
-import { ReactDOM } from 'react';
+import { createPortal } from 'react-dom';
 import classes from './Modal.module.css';
+
+const Backdrop = (props) => {
+    return (<div className={classes.backdrop} onClick={props.onClose} />);
+};
+
+const ModalOverlay = (props) => {
+    return (<div className={`${classes.modal} ${props.classes}`}>{props.children}</div>);
+};
 
 const Modal = (props) => {
     console.log(props);
     return (
         <>
-            {/* {ReactDOM.createPortal(
-                <div className={classes.backdrop} />,
-                document.getElementById('backdrop-root')
+            {createPortal(
+                <Backdrop onClose={props.onClose} />,
+                document.getElementById('overlays')
             )}
-            {ReactDOM.createPortal(
-                <div className={`${classes.modal} ${props.classes}`}>
-                    {props.children}
-                </div>,
-                document.getElementById('overelay-root')
-            )} */}
-            <div className={classes.backdrop} />
-            <div className={`${classes.modal} ${props.classes}`}>
-                {props.children}
-            </div>
+            {createPortal(
+                <ModalOverlay >{props.children}</ModalOverlay>,
+                document.getElementById('overlays')
+            )}
         </>
-
     );
 };
 

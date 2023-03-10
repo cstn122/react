@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import classes from './CartItem.module.css';
 import { CartItemsContext, SetCartItemsContext } from '../../CartItemsContext';
 
@@ -8,10 +8,13 @@ const CartItem = (props) => {
   const setCartItems = useContext(SetCartItemsContext);
 
   const increaseHandler = () => {
-    cartItems.map(item => { item.id === });
-
+    // props.amount += 1;
+    console.log(props);
+    props = {...props, amount: 99};
   };
-  const decreaseHandler = () => {};
+  const decreaseHandler = () => {
+    props.amount -= 1;
+  };
 
   return (
     <li className={`${classes['cart-item']} ${props.classes}`}>
