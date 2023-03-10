@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./Create.module.css";
 import Button from "../UI/Button";
+import { FullDataContext, FullDataDispatchContext } from "../../FullDataContext/FullDataContext";
 
 const Create = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const fullDataContext = useContext(FullDataContext);
+  const fullDataDispatchContext = useContext(FullDataDispatchContext);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -13,9 +17,16 @@ const Create = (props) => {
       name: enteredName,
       description: enteredDescription,
       is_demo: '',
-    }
-    console.log('submitted! ', enteredData);
-    props.onSave(enteredData);
+    };
+    // props.onSave(enteredData);
+    fullDataDispatchContext({
+      type: 'added',
+      id: Math.random(),// nextId++,
+      name: enteredData.name,
+      description: enteredData.description,
+      is_demo: null,
+    });
+    setIsUpdating(() => false);
   };
 
   const cancelHandler = (event) => {

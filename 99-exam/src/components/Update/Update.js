@@ -1,22 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./Update.module.css";
 import Button from "../UI/Button";
+import { FullDataContext, FullDataDispatchContext } from "../../FullDataContext/FullDataContext";
 
-const Create = (props) => {
+const Update = (props) => {
   const [updatedName, setUpdatedName] = useState("");
   const [updatedDescription, setUpdatedDescription] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const fullDataContext = useContext(FullDataContext);
+  const fullDataDispatchContext = useContext(FullDataDispatchContext);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const updatedData = {
+    // const updatedData = {
+    //   id: props.updateItem.id,
+    //   name: updatedName,
+    //   description: updatedDescription,
+    //   is_demo: props.updateItem.is_demo,
+    // };
+
+    // console.log('submitted! ', updatedData);
+    // props.onSave(updatedData);
+
+    fullDataDispatchContext({
+      type: 'changed',
       id: props.updateItem.id,
       name: updatedName,
       description: updatedDescription,
       is_demo: props.updateItem.is_demo,
-    }
-
-    console.log('submitted! ', updatedData);
-    props.onSave(updatedData);
+    });
   };
 
   const cancelHandler = (event) => {
@@ -49,4 +61,4 @@ const Create = (props) => {
   );
 };
 
-export default Create;
+export default Update;

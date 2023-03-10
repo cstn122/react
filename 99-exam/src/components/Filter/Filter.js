@@ -8,14 +8,12 @@ const Filter = (props) => {
   const filterChangeHandler = (event) => {
     setFilter(() => event.target.value);
     if (event.target.value.trim().length !== 0) {
-      // console.log("filtering: ", event.target.value);
       setFilteredData(() =>
         props.fullData.filter((filtered) =>
           filtered.name.includes(event.target.value)
         )
       );
     } else {
-      // console.log("not filtering");
       setFilteredData(() => props.fullData);
     }
   };

@@ -1,10 +1,11 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import classes from './App.module.css';
 import List from "./components/List/List";
 import Create from "./components/Create/Create";
 import Update from "./components/Update/Update";
 import Button from "./components/UI/Button";
 import Filter from "./components/Filter/Filter";
+import { FullDataContext, FullDataDispatchContext } from "./FullDataContext/FullDataContext";
 
 const App = () => {
   const DUMMY_ITEMS = [
@@ -64,39 +65,47 @@ const App = () => {
 
   const createHandler = () => {
     console.log("create!");
-    setCreateModal(() => <Create onCancel={cancelHandler} onSave={saveDataHandler} />);
+    setCreateModal(() => <Create onCancel={cancelHandler} />);
   };
 
-  const saveDataHandler = (enteredData) => {
-    console.log('saving...');
-    dispatch({
-      type: 'added',
-      id: nextId++,
-      name: enteredData.name,
-      description: enteredData.description,
-      is_demo: null,
-    });
-    console.log('dispatched', enteredData);
-    setCreateModal(() => null);
-  };
+  // const saveDataHandler = (enteredData) => {
+  //   console.log('saving...');
+  //   dispatch({
+  //     type: 'added',
+  //     id: nextId++,
+  //     name: enteredData.name,
+  //     description: enteredData.description,
+  //     is_demo: null,
+  //   });
+  //   console.log('dispatched', enteredData);
+  //   setCreateModal(() => null);
+  // };
 
   const updateHandler = (updateITEM) => {
-    setUpdateModal(() => <Update onCancel={cancelHandler} onSave={updateDataHandler} updateItem={updateITEM} />);
+    // setUpdateModal(() => <Update onCancel={cancelHandler} onSave={updateDataHandler} updateItem={updateITEM} />);
+    setUpdateModal(() => <Update onCancel={cancelHandler} updateItem={updateITEM} />);
   };
 
-  const updateDataHandler = (dataToUpdate) => {
-    console.log('updating from App...', dataToUpdate);
-    dispatch({
-      type: 'changed',
-      data: {
-        id: dataToUpdate.id,
-        name: dataToUpdate.name,
-        description: dataToUpdate.description,
-        is_demo: dataToUpdate.is_demo,
-      },
-    })
+  useEffect(() => {
+    console.log('close modals');
+    setCreateModal(() => null);
     setUpdateModal(() => null);
-  };
+  },
+    [allData]);
+
+  // const updateDataHandler = (dataToUpdate) => {
+  //   console.log('updating from App...', dataToUpdate);
+  //   dispatch({
+  //     type: 'changed',
+  //     data: {
+  //       id: dataToUpdate.id,
+  //       name: dataToUpdate.name,
+  //       description: dataToUpdate.description,
+  //       is_demo: dataToUpdate.is_demo,
+  //     },
+  //   })
+  //   setUpdateModal(() => null);
+  // };
 
   const cancelHandler = (cancel) => {
     console.log(cancel);
@@ -120,21 +129,19 @@ const App = () => {
   };
 
   return (
-    // <FullDataContext.Provider value={allData}>
-    // <FullDataDispatchContext.Provider value={dispatch}>
-    <>
-      {createModal}
-      {updateModal}
-      <Button onClick={createHandler} classes={classes.button}>Create</Button>
-      <Filter onFilter={filterHandler} fullData={allData} />
-      <List
-        data={filter.trim().length === 0 ? allData : filteredData}
-        onUpdate={updateHandler}
-        onDelete={deleteHandler}
-      />
-    </>
-    // </FullDataDispatchContext.Provider>
-    // </FullDataContext.Provider>
+    <FullDataContext.Provider value={allData}>
+      <FullDataDispatchContext.Provider value={dispatch}>
+        {createModal}
+        {updateModal}
+        <Button onClick={createHandler} classes={classes.button}>Create</Button>
+        <Filter onFilter={filterHandler} fullData={allData} />
+        <List
+          data={filter.trim().length === 0 ? allData : filteredData}
+          onUpdate={updateHandler}
+          onDelete={deleteHandler}
+        />
+      </FullDataDispatchContext.Provider>
+    </FullDataContext.Provider>
   );
 };
 
@@ -150,9 +157,10 @@ const dataReducer = (allData, action) => {
     }
 
     case 'changed': {
+      console.log('reducer', action);
       return allData.map(d => {
-        if (d.id === action.data.id) {
-          return action.data;
+        if (d.id === action.id) {
+          return { id: action.id, name: action.name, description: action.description, is_demo: action.is_demo };
         } else {
           return d;
         }
@@ -167,7 +175,6 @@ const dataReducer = (allData, action) => {
       throw Error('Unknown action:', action.type);
     }
   }
-
 };
 
 export default App;
