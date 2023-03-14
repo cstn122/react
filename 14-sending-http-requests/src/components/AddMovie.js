@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import classes from './AddMovie.module.css';
 
 function AddMovie(props) {
+  // recording state but not re-rendering them on screen -> use useRef
   const titleRef = useRef('');
   const openingTextRef = useRef('');
   const releaseDateRef = useRef('');

@@ -14,43 +14,51 @@ function App() {
   //   fetchMoviesHandler();
   // }, [fetchMoviesHandler]);
 
-  const fetchMoviesHandler = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      // const response = await fetch('https://swapi.dev/api/films');
-      const response = await fetch('https://react-http-5a556-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json');
+  const fetchMoviesHandler = useCallback(
+    async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        // // fetch data via Fetch API from Star Wars API
+        // const response = await fetch('https://swapi.dev/api/films');
 
-      if (!response.ok) {
-        throw new Error('Something went wrong.');
+        // fetch data via Fetch API from our self-built Firebase API
+        const response = await fetch('https://react-http-5a556-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json');
+
+        // error handling
+        if (!response.ok) {
+          throw new Error('Something went wrong.');
+        }
+
+        const data = await response.json();
+
+        const loadedMovies = [];
+
+        for (const key in data) {
+          loadedMovies.push({
+            id: key,
+            title: data[key].title,
+            releaseDate: data[key].release_date,
+            openingText: data[key].opening_crawl,
+          });
+        }
+        setMovies(loadedMovies);
+
+        // const transformedData = data.results.map(movieData => {
+        //   return ({
+        //     id: movieData.episode_id,
+        //     title: movieData.title,
+        //     releaseDate: movieData.release_date,
+        //     openingText: movieData.opening_crawl,
+        //   });
+        // });
+        // setMovies(transformedMovies);
+
+        setIsLoading(false);
+      } catch (error) {
+        setError(error.message);
       }
-      const data = await response.json();
-
-      const loadedMovies = [];
-
-      for (const key in data) {
-        loadedMovies.push({
-          id: key,
-          title: data[key].title,
-          releaseDate: data[key].release_date,
-          openingText: data[key].opening_crawl,
-        })
-      }
-      setMovies(loadedMovies);
-      // const transformedData = data.results.map(movieData => {
-      //   return ({
-      //     id: movieData.episode_id,
-      //     title: movieData.title,
-      //     releaseDate: movieData.release_date,
-      //     openingText: movieData.opening_crawl,
-      //   });
-      // });
-      // setMovies(transformedMovies);
-      setIsLoading(false);
-    } catch (error) {
-      setError(error.message);
-    }
-  }, []);
+    }, []);
 
   async function addMovieHandler(movie) {
     const response = await fetch('https://react-http-5a556-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json', {
@@ -85,6 +93,5 @@ function App() {
     </React.Fragment>
   );
 }
-
 
 export default App;
