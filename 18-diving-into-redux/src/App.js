@@ -10,13 +10,11 @@ export default function App() {
   const isAuthed = useSelector((state) => state.auth.isAuthenticated);
 
   return (
-    <div>
+    <>
       <Header />
-      <main>
-        {isAuthed && <UserProfile />}
-        {!isAuthed && <Auth />}
-      </main>
+      {isAuthed && <UserProfile />}
+      {!isAuthed && <Auth />}
       <Counter />
-    </div>
+    </>
   );
 }
