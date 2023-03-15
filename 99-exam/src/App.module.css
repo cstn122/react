@@ -1,18 +1,44 @@
-.button {
+.section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section button {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     background-color: rgb(49, 133, 156);
     border: 1px solid rgb(49, 133, 156);
     padding: 5px 5px;
-    display: inline;
-    margin: 5rem 64rem 0.5rem 17.5rem;
+    margin: 1rem auto;
 }
 
-.button :hover,
-.button :active {
+.section button :hover,
+.section button :active {
     background-color: rgb(9, 43, 48);
     border-color: rgb(9, 43, 48);
 }
 
-.button:focus {
+.section button:focus {
     outline: none;
+}
+
+.section input {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font: inherit;
+    font-size: small;
+    margin: 1rem auto;
+    padding: 5px;
+    height: 1.5rem;
+    width: 200px;
+    text-align: left;
+    border-radius: 3px;
+    border: 1.5px solid rgb(67, 114, 127);
 }
