@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Modal from '../UI/Modal';
-import { FullDataDispatchContext } from "../../FullDataContext";
+import { FullDataDispatchContext } from '../../FullDataContext/FullDataContext';
 
 const Update = (props) => {
     const fullDataDispatchContext = useContext(FullDataDispatchContext);
