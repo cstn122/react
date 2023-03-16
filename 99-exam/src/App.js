@@ -12,7 +12,7 @@ const App = () => {
   jsonData = JSON.parse(JSON.stringify(jsonData));
 
   const [allData, dispatch] = useReducer(dataReducer, jsonData)
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("");  // remove
   const [filteredData, setFilteredData] = useState(allData);
   const [createModal, setCreateModal] = useState(null);
   const [updateModal, setUpdateModal] = useState(null);
@@ -64,14 +64,17 @@ const App = () => {
       <FullDataContext.Provider value={allData}>
         {createModal}
         {updateModal}
-        <section className={classes.section}>
-          <Button onClick={createHandler} classes={classes.button}>Create</Button>
-          <input onChange={filterChangeHandler} value={filter} placeholder="Filter by name" />
-        </section>
-        <List
-          data={filter.trim().length === 0 ? allData : filteredData}
-          onUpdate={updateHandler}
-        />
+        <div className={classes.container}>
+          <div className={classes.section}>
+            {/* use div instead */}
+            <Button onClick={createHandler} classes={classes.button}>Create</Button>
+            <input onChange={filterChangeHandler} placeholder="Filter by name" />
+          </div>
+          <List
+            data={filter.trim().length === 0 ? allData : filteredData}
+            onUpdate={updateHandler}
+          />
+        </div>
       </FullDataContext.Provider>
     </FullDataDispatchContext.Provider>
   );
