@@ -1,39 +1,52 @@
-import "./Expenses.css"
-import { useState } from "react";
-
-// this is a parent of
+import React, { useState } from "react";
+import ExpenseItem from "./ExpenseItem";
+import "./Expenses.css";
 import Card from "../UI/Card";
 import ExpensesFilter from "./ExpenseFilter";
-import ExpensesList from "./ExpensesList";
-import ExpensesChart from "./ExpensesChart";
+import { useEffect } from "react";
 
-const Expenses = props => {    // child of App, props is to receive items aka expenses from App
-    const [filteredYear, setFilteredYear] = useState("2021");
+const Expenses = ({ items }) => {
+    const [filteredYear, setFilteredYear] = useState("2022");
+    const [searchedTitle, setsearchedTitle] = useState("");
+    const [filteredExpenses, setFilteredExpenses] = useState(items.filter((expense) =>
+        (expense.date.getFullYear().toString() === filteredYear)
+    ));
 
-    const filterChangeHandler = (selectedYear) => {
-        console.log("Expenses.js filtered " + selectedYear);
-        setFilteredYear(selectedYear);
+    const expensesFilterHandler = (year) => {
+        setFilteredYear(year);
     };
 
-    const filteredExpenses = props.items.filter(expense => {
-        return expense.date.getFullYear().toString() === filteredYear;
-    });
-    // what i thought was    expense.date.year 
+    const expensesSearchHandler = (title) => {
+        setsearchedTitle(title);
+    };
 
+    useEffect(() => {
+        if (searchedTitle) {
+            setFilteredExpenses(items.filter((expense) =>
+                (expense.date.getFullYear().toString() === filteredYear)
+                && (expense.title.includes(searchedTitle))
+            ));
+        } else {
+            setFilteredExpenses(items.filter((expense) =>
+                expense.date.getFullYear().toString() === filteredYear));
+        }
+    }, [filteredYear, searchedTitle, items]);
     return (
-        <li>
-            <Card className="expenses">
-                <ExpensesFilter
-                    selected={filteredYear}
-                    onChangeFilter={filterChangeHandler}
+        <Card className="expenses">
+            <ExpensesFilter
+                selected={filteredYear}
+                onChangeFilter={expensesFilterHandler}
+                onChangeSearch={expensesSearchHandler}
+            />
+            {filteredExpenses.map((expense) => (
+                <ExpenseItem
+                    key={expense.id}
+                    title={expense.title}
+                    amount={expense.amount}
+                    date={expense.date}
                 />
-                <ExpensesChart expenses={filteredExpenses} />
-
-                <ExpensesList
-                    items={filteredExpenses}
-                />
-            </Card>
-        </li>
+            ))}
+        </Card>
     );
 };
 

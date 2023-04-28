@@ -10,6 +10,32 @@
     justify-content: space-between;
     margin: 1rem 0;
   }
+
+  .expenses-filter__control-detail {
+    justify-content: space-evenly;
+  }
+  
+  .expenses-filter__control-detail input {
+    margin: 0 1rem;
+    padding: 5px;
+    height: 1.7rem;
+  }
+
+  .expenses-filter__control-detail label {
+    padding: 5px 8px;
+
+  }
+
+  .expenses-filter__control-detail button {
+    padding: 5px 8px;
+    height: 1.7rem;
+    background-color: #fff;
+    border-color: #fff;
+    border-style: none;
+  } 
+  .expenses-filter__control-detail button:hover {
+    cursor: pointer;
+  }
   
   .expenses-filter label {
     font-weight: bold;

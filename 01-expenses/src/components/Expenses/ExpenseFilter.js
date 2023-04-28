@@ -1,25 +1,36 @@
 import React from 'react';
 import './ExpensesFilter.css';
 
-const ExpensesFilter = (props) => {
-    const dropdownChangeHandler = event => {
-        props.onChangeFilter(event.target.value);
-        console.log("ExpenseFilter.js changed " + event.target.value);
-    }
+const ExpensesFilter = ({ selected, onChangeFilter, onChangeSearch }) => {
+  const dropdownChangeHandler = e => {
+    onChangeFilter(e.target.value);
+  }
 
-    return (
+  const inputChangeHandler = e => {
+    onChangeSearch(e.target.value);
+  };
+
+  return (
     <div className='expenses-filter'>
       <div className='expenses-filter__control'>
-        <label>Filter by year</label>
-        <select 
-        value={props.selected}
-        onChange={dropdownChangeHandler}
-        >
-          <option value='2022'>2022</option>
-          <option value='2021'>2021</option>
-          <option value='2020'>2020</option>
-          <option value='2019'>2019</option>
-        </select>
+        <div className='expenses-filter__control-detail'>
+          <label>Filter by year</label>
+          <select
+            value={selected}
+            onChange={dropdownChangeHandler}
+          >
+            <option value='2022'>2022</option>
+            <option value='2021'>2021</option>
+            <option value='2020'>2020</option>
+            <option value='2019'>2019</option>
+          </select>
+        </div>
+        <div className='expenses-filter__control-detail'>
+          <input
+            placeholder='Search by title...'
+            onChange={inputChangeHandler}
+          />
+        </div>
       </div>
     </div>
   );
